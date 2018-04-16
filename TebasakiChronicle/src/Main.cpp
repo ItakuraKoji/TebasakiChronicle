@@ -4,7 +4,7 @@
 #include "K_Graphics\CameraList.h"
 #include "K_Graphics\ShaderList.h"
 #include "K_Graphics\TextureList.h"
-
+#include "./BaseClass/Sound.h"
 int main()
 {
 	K_System::SystemClass* sc = new K_System::SystemClass(720, 540, false);
@@ -27,6 +27,12 @@ int main()
 	spobj->controlPoint = K_Math::Vector2(64.f, 64.f);
 
 	K_Graphics::FrameBufferList* frame = new K_Graphics::FrameBufferList(tList);
+
+	Sound sound;
+	sound.LoadSound("test", "data/sounds/test.ogg");
+	sound.MasterGain(0.8f);
+	sound.Play(Sound::Id::BGM01,true,0.5f);
+	std::cout << std::boolalpha << sound.IsPlay(Sound::Id::BGM01) << std::endl;
 
 	while (sc->IsSystemEnd() == false)
 	{
@@ -52,4 +58,5 @@ int main()
 	delete sList;
 	delete tList;
 	delete frame;
+	
 }
