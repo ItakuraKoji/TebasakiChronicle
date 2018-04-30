@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\BaseClass\Move.cpp" />
     <ClCompile Include="src\BaseClass\Position.cpp" />
+    <ClCompile Include="src\BaseClass\Sound.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Object\GameObject.cpp" />
     <ClCompile Include="src\Object\Player\Player.cpp" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="src\BaseClass\Move.h" />
     <ClInclude Include="src\BaseClass\Position.h" />
+    <ClInclude Include="src\BaseClass\Sound.h" />
     <ClInclude Include="src\Object\GameObject.h" />
     <ClInclude Include="src\Object\Player\Player.h" />
     <ClInclude Include="src\Scene\Scene.h" />

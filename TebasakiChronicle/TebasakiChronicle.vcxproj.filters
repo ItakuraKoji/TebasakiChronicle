@@ -40,6 +40,9 @@
     <ClCompile Include="src\Scene\Scene.cpp">
       <Filter>ソース ファイル\src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\BaseClass\Sound.cpp">
+      <Filter>ソース ファイル\src\BaseClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseClass\Move.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="src\Scene\Scene.h">
       <Filter>ソース ファイル\src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseClass\Sound.h">
+      <Filter>ソース ファイル\src\BaseClass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

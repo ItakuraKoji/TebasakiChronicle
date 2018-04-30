@@ -4,7 +4,7 @@
 #include "K_Graphics\CameraList.h"
 #include "K_Graphics\ShaderList.h"
 #include "K_Graphics\TextureList.h"
-
+#include "./BaseClass/Sound.h"
 int main()
 {
 	K_System::SystemClass* sc = new K_System::SystemClass(720, 540, false);
@@ -28,6 +28,23 @@ int main()
 
 	K_Graphics::FrameBufferList* frame = new K_Graphics::FrameBufferList(tList);
 
+	//サウンドエンジンの初期化
+	SoundEngine* soundEngine = soundEngine->GetInstance();
+	soundEngine->Create();
+	//音源のロード
+	Sound source;
+	source.LoadSound("bgm","a.ogg");
+	Sound source1;
+	source1.LoadSound("se", "slashing01.ogg",ALLREAD);
+	//Engineにサウンドを登録(追加しないとアクセス違反)
+	soundEngine->AddSource(source);
+	soundEngine->AddSource(source1);
+	K_Audio::SoundSource* bgm = soundEngine->GetInstance()->GetSource("bgm");
+	K_Audio::SoundSource* se = soundEngine->GetInstance()->GetSource("se");
+	//再生
+	bgm->Play(true);
+
+	int c = 0;
 	while (sc->IsSystemEnd() == false)
 	{
 		sc->ProcessSystem();
@@ -36,6 +53,24 @@ int main()
 
 		cList->GetCamera("Camera")->Draw();
 
+		
+		if (GetKeyState(VK_RETURN) & 0x8000)
+		{
+			++c;
+		}
+		else
+		{
+			c = 0;
+		}
+		if (c == 1)
+		{
+			//se->Play(false);
+			se->PlayCopy();
+		}
+		if (GetKeyState(VK_SPACE) & 0x8000)
+		{
+			soundEngine->GetInstance()->DeleteSound("bgm");
+		}
 		spobj->Draw3D(cList->GetCamera("Camera"),
 			sList->GetShader("shader"),
 			K_Math::Box2D(0, 0, 128, 128),
