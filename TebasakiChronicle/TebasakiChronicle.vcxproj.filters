@@ -52,9 +52,6 @@
     <ClCompile Include="src\Object\GameObject.cpp">
       <Filter>ソース ファイル\src\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Object\Player\Player.cpp">
-      <Filter>ソース ファイル\src\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\Scene.cpp">
       <Filter>ソース ファイル\src\Scene</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
     </ClCompile>
     <ClCompile Include="src\BaseClass\Status\Status.cpp">
       <Filter>ソース ファイル\src\BaseClass\Status</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Object\Player\CameraGun\CameraGun.cpp">
-      <Filter>ソース ファイル\src\Object\Player\CameraGan</Filter>
     </ClCompile>
     <ClCompile Include="src\Object\Player\CharaController\CharaController.cpp">
       <Filter>ソース ファイル\src\Object\Player\CharaController</Filter>
@@ -109,6 +103,12 @@
     <ClCompile Include="src\Object\Enemy\EnemyManager.cpp">
       <Filter>ソース ファイル\src\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\Object\Player\Player.cpp">
+      <Filter>ソース ファイル\src\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object\Player\CameraGun\CameraGun.cpp">
+      <Filter>ソース ファイル\src\Object\Player\CameraGan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseClass\Move.h">
@@ -116,9 +116,6 @@
     </ClInclude>
     <ClInclude Include="src\Object\GameObject.h">
       <Filter>ソース ファイル\src\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Object\Player\Player.h">
-      <Filter>ソース ファイル\src\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\Scene.h">
       <Filter>ソース ファイル\src\Scene</Filter>
@@ -143,9 +140,6 @@
     </ClInclude>
     <ClInclude Include="src\BaseClass\Status\Status.h">
       <Filter>ソース ファイル\src\BaseClass\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Object\Player\CameraGun\CameraGun.h">
-      <Filter>ソース ファイル\src\Object\Player\CameraGan</Filter>
     </ClInclude>
     <ClInclude Include="src\Object\Player\CharaController\CharaController.h">
       <Filter>ソース ファイル\src\Object\Player\CharaController</Filter>
@@ -176,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="src\Object\Enemy\EnemyManager.h">
       <Filter>ソース ファイル\src\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object\Player\Player.h">
+      <Filter>ソース ファイル\src\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object\Player\CameraGun\CameraGun.h">
+      <Filter>ソース ファイル\src\Object\Player\CameraGan</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
