@@ -1,55 +1,79 @@
-#include "SystemClass.h"
+#include "CSTList.h"
+#include "BaseClass/Collision/CollisionCreator.h"
 #include "MeshModel.h"
-#include "FrameBufferList.h"
-#include "K_Graphics\CameraList.h"
-#include "K_Graphics\ShaderList.h"
-#include "K_Graphics\TextureList.h"
+#include "SystemClass.h"
+
+#include "BaseClass/ImageManager/ImageManager.h"
+#include "Object/Enemy/EnemyType/EnemyTypeManager.h"
+#include "Object/Enemy/EnemyManager.h"
+
+#include "Object/Player/Player.h"
 
 int main()
 {
-	K_System::SystemClass* sc = new K_System::SystemClass(720, 540, false);
+	//ウィンドウ
+	K_System::SystemClass* sc = new K_System::SystemClass("TebasakiChronicle", 720, 540, false);
 
-	K_Graphics::CameraList* cList = new K_Graphics::CameraList;
-	cList->AddPerspectiveCamera("Camera",
-		K_Math::Vector3(0, 0, -100), K_Math::Vector3(0, 0, 0), 720, 540, 0.1f, 1500.f, 45.f);
+	//CollisionManagerを初期化
+	CC::Initialize();
 
-	K_Graphics::ShaderList* sList = new K_Graphics::ShaderList;
+	//カメラリスト
+	K_Math::Vector3 position = K_Math::Vector3(0, 0, -150);
+	K_Math::Vector3 target = K_Math::Vector3(0, 0, 0);
+	int screenWidth = 720;
+	int screenHeight = 540;
+	float clipNear = 0.1f;
+	float clipFar = 1500.f;
+	float fieldOfView = 45.f;
+	CST::CreatePerspectiveCamera(position, target, screenWidth, screenHeight, clipNear, clipFar, fieldOfView);
+	CST::CreateOrthoCamera(position, target, screenWidth, screenHeight, clipNear, clipFar);
 
-	sList->LoadVertexShader("data/shader/SpriteShader.vs");
-	sList->LoadFragmentShader("data/shader/SpriteShader.ps");
-	sList->CreateShaderProgram("shader", "data/shader/SpriteShader.vs", "data/shader/SpriteShader.ps");
+	INPUT::SetInputClass(sc->GetInput());
+	INPUT::Create(K_Input::VpadIndex::Pad0);
 
-	K_Graphics::TextureList* tList = new K_Graphics::TextureList;
+	//シェーダーリスト
+	CST::CreateShader("data/shader/SpriteShader.vs", "data/shader/SpriteShader.ps");
 
-	tList->LoadTexture("Tekitou", "./data/image/Tekitou.tga");
-	K_Graphics::SpriteObject* spobj = new K_Graphics::SpriteObject(
-		tList->GetTexture("Tekitou"));
-	spobj->controlPoint = K_Math::Vector2(64.f, 64.f);
+	//地形(仮)
+	CC::CreateCollisionObject(CC::CreateBoxShape(1000.f, 50.f, 10.f), false, CollisionMask::Non, CollisionMask::Ground, K_Math::Vector3(0, -80, 0));
 
-	K_Graphics::FrameBufferList* frame = new K_Graphics::FrameBufferList(tList);
+	//敵の種類を作成
+	EnemyTypeManager* etm = new EnemyTypeManager();
+	etm->LoadEnemyData("");
+	//敵1体に上記で作成した種類を割り当てる
+	EnemyManager* emanager = new EnemyManager();
+	emanager->CreateEnemy(etm->GetEnemyTypeData(0), K_Math::Vector3(0, 0, 0), Status::Direction::Right);
+
+	//プレイヤー
+	Player* player = new Player();
+	player->Initliaze();
 
 	while (sc->IsSystemEnd() == false)
 	{
 		sc->ProcessSystem();
+		CC::Run();
 
-		frame->BeginDraw(720, 540, 0.0f, 0.0f, 1.0f);
+		emanager->UpdateAllEnemy();
 
-		cList->GetCamera("Camera")->Draw();
+		player->UpDate();
 
-		spobj->Draw3D(cList->GetCamera("Camera"),
-			sList->GetShader("shader"),
-			K_Math::Box2D(0, 0, 128, 128),
-			K_Math::Vector3(-64, 64, 100),
-			K_Math::Vector3(0, 0, 0),
-			K_Math::Vector3(1, 1, 1));
+
+		CST::FrameBufferBeginDraw(720, 540, 0.f, 0.f, 1.f);
+		CST::GetPerspectiveCamera()->Draw();
+		CST::GetOrthoCamera()->Draw();
+
+		CC::DebugDraw(CST::GetShaderClass(), CST::GetPerspectiveCamera());
+
+		//emanager->DrawAllEnemy();
+		//player->Render();
 
 		sc->SwapBuffer();
 	}
 
-	/*delete spobj;*/
 	delete sc;
-	delete cList;
-	delete sList;
-	delete tList;
-	delete frame;
+	delete etm;
+	delete emanager;
+	delete player;
+
+	CC::Delete();
 }
